@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.LOAISANPHAM>
+
+
+@foreach (var item in Model) {
+<li>
+    <a href=@Url.Action("trangTimKiem", "Guest", new { idLoaiSP = item.MaLoaiSP.Trim() })>
+    @item.TenLoaiSP [@Html.Action("_Layout_trangChu_DanhMucSP_soluong", "Guest", new { id=item.MaLoaiSP.Trim() })]
+    </a>
+</li>
+}
+

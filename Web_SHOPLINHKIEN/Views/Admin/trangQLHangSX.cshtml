@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.HANGSANXUAT>
+
+@{
+    ViewBag.Title = "trangQLHangSX";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin </a> <span class="divider">/</span></li>
+        <li class="active">Quản lý hãng sản xuất</li>
+    </ul>
+    <h3>DANH SÁCH HÃNG SẢN XUẤT</h3>
+    <a href="@Url.Action("trangQLHangSX_themmoi", "Admin")" class="btn btn-large"> Thêm mới</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã hãng sản xuất</th>
+                <th>Tên hãng sản xuất</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                using (Html.BeginForm("trangQLHangSX", "Admin", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <tr>
+                        <td><input type="text" id="ma" name="ma" value="@item.MaHangSX.Trim()" readonly /></td>
+                        <td>
+                            <input type="text" id="ten" name="ten" placeholder="Nhập tên hãng sản xuất" value="@item.TenHangSX.Trim()" maxlength="50" minlength="5" />
+                            <p><strong style="color:darkred;">@ViewData["loiten"+item.MaHangSX.Trim()]</strong></p>
+                        </td>
+                        <td>
+                            <div class="input-append">
+                                <button class="btn" type="submit">CẬP NHẬT</button>
+                                    <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLHangSX_xoa", "Admin", new { id = item.MaHangSX.Trim() })'">
+                                    <i style="color:white;" class="icon-remove icon-white"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</div>

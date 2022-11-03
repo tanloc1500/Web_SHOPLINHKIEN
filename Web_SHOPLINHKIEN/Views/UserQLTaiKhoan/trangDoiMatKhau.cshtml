@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "trangDoiMatKhau";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ </a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangThongTinTaiKhoan", "UserQLTaiKhoan")">Quản lý tài khoản </a> <span class="divider">/</span></li>
+        <li class="active">Đổi mật khẩu</li>
+    </ul>
+    <h3>Đổi mật khẩu</h3>
+    <div class="well">
+        @using(Html.BeginForm("trangDoiMatKhau", "UserQLTaiKhoan", FormMethod.Post, new { @class= "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+        <div class="control-group">
+            <label class="control-label">Mật khẩu cũ:</label>
+            <div class="controls">
+                <input type="password" id="oldpass" name="oldpass" placeholder="Nhập mật khẩu cũ"/>
+                <p><strong style="color:darkred;">@ViewData["loioldpass"]</strong></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Mật khẩu mới:</label>
+            <div class="controls">
+                <input type="password" id="newpass" name="newpass" placeholder="Nhập mật khẩu mới" />
+                <p><strong style="color:darkred;">@ViewData["loinewpass"]</strong></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Nhập lại mật khẩu mới:</label>
+            <div class="controls">
+                <input type="password" id="renewpass" name="renewpass" placeholder="Nhập lại mật khẩu mới" />
+                <p><strong style="color:darkred;">@ViewData["loirenewpass"]</strong></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-large btn-success" type="submit" value="Đổi mật khẩu" />
+            </div>
+        </div>
+        }
+    </div>
+</div>

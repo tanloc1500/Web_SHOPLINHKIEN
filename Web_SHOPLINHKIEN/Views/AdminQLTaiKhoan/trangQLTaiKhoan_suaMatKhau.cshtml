@@ -1,0 +1,55 @@
+﻿@model Web_SHOPLINHKIEN.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "trangQLTaiKhoan_suaMatKhau";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")">Quản lý tài khoản </a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangQLTaiKhoan_sua", "AdminQLTaiKhoan", new { id = Model.MaTK })">Chỉnh sửa tài khoản @Model.ID</a> <span class="divider">/</span></li>
+        <li class="active">Chỉnh sửa mật khẩu tài khoản @Model.ID</li>
+    </ul>
+    <h3>Đổi mật khẩu</h3>
+    <div class="well">
+        @using (Html.BeginForm("trangQLTaiKhoan_suaMatKhau", "AdminQLTaiKhoan", FormMethod.Post, new { @class = "form-horizontal", id = Model.MaTK.Trim() }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="control-group">
+                <label class="control-label">Tên tài khoản:</label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" value="@Model.ID.Trim()" readonly />
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Mật khẩu mới:</label>
+                <div class="controls">
+                    <input type="password" id="newpass" name="newpass" placeholder="Nhập mật khẩu mới" />
+                    <p><strong style="color:darkred;">@ViewData["loinewpass"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Nhập lại mật khẩu mới:</label>
+                <div class="controls">
+                    <input type="password" id="renewpass" name="renewpass" placeholder="Nhập lại mật khẩu mới" />
+                    <p><strong style="color:darkred;">@ViewData["loirenewpass"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-large btn-success" type="submit" value="Đổi mật khẩu" />
+                </div>
+            </div>
+        }
+        <a href="@Url.Action("trangQLTaiKhoan_xem", "AdminQLTaiKhoan", new { id=Model.MaTK.Trim() })" class="btn"> Xem chi tiết </a>
+        <a href="@Url.Action("trangQLTaiKhoan_sua", "AdminQLTaiKhoan", new { id=Model.MaTK.Trim() })" class="btn"> Chỉnh sửa tài khoản </a>
+        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_xoa", "AdminQLTaiKhoan", new { id = Model.MaTK.Trim() })'">
+            <i><i style="color:white;" class="icon-remove icon-white"></i>Xóa tài khoản</i>
+        </button>
+    </div>
+    <a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")" class="btn btn-large"><i class="icon-arrow-left"></i> Quay về trang quản lý tài khoản </a>
+</div>

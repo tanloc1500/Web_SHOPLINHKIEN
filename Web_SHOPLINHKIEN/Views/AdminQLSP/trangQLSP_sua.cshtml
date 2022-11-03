@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_SANPHAM>
+
+@{
+    ViewBag.Title = "trangQLSP_sua";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+    var first = Model.First();
+    int i = 0;
+    string idname = "anh1";
+}
+
+<script src="~/Plugins/ckeditor/ckeditor.js"></script>
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangQLSP", "AdminQLSP")">Quản lý sản phẩm</a> <span class="divider">/</span></li>
+        <li class="active">Sửa sản phẩm @first.SANPHAM.TenSP</li>
+    </ul>
+    <h3>Thêm mới sản phẩm</h3>
+    <div class="well">
+        <!--
+    <div class="alert alert-info fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+     </div>
+    <div class="alert fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+     </div>
+     <div class="alert alert-block alert-error fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+     </div> -->
+
+        @using (Html.BeginForm("trangQLSP_sua", "AdminQLSP", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = first.SANPHAM.MaSP.Trim() }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <h4>Chỉnh sửa sản phẩm</h4>
+            <div class="control-group">
+                <label class="control-label">Tên sản phẩm:</label>
+                <div class="controls">
+                    <textarea name="tensp" id="tensp" cols="150" rows="2" placeholder="Nhập tên sản phẩm">@first.SANPHAM.TenSP</textarea>
+                    <p style="color:red;"><strong>@ViewData["loitensp"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Đơn giá:</label>
+                <div class="controls">
+                    <input type="tel" id="gia" name="gia" value="@first.SANPHAM.GiaTien" placeholder="Nhập đơn giá" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    <p style="color:red;"><strong>@ViewData["loigia"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Số lượng:</label>
+                <div class="controls">
+                    <input type="number" id="sl" name="sl" value="@first.SANPHAM.SoLuong" min="1" placeholder="Nhập số lượng">
+                    <p style="color:red;"><strong>@ViewData["loisl"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Loại sản phẩm:</label>
+                <div class="controls">
+                    <select class="span1" name="loaisp">
+                        <option value="">Chọn loại sản phẩm</option>
+                        @Html.Action("trangQLSP_comboboxLoaiSP", "AdminQLSP", new { idLoaiSP = first.SANPHAM.MaLoaiSP.Trim() })
+                    </select>
+                    <p style="color:red;"><strong>@ViewData["loiloaisp"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Hãng sản xuất:</label>
+                <div class="controls">
+                    <select class="span1" name="hangsx">
+                        <option value="">Chọn hãng sản xuất</option>
+                        @Html.Action("trangQLSP_comboboxHangSX", "AdminQLSP", new { idHangSX = first.SANPHAM.MaHangSX.Trim() })
+                    </select>
+                    <p style="color:red;"><strong>@ViewData["loihangsx"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Mã SKU</label>
+                <div class="controls">
+                    <input type="text" id="masku" name="masku" value="@first.SANPHAM.MaSKU" placeholder="Nhập mã SKU">
+                    <p style="color:red"><strong>@ViewData["loimasku"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Ngày phát hành:</label>
+                <div class="controls">
+                    <input type="date" id="ngayph" name="ngayph" value="@String.Format("{0:yyyy-MM-dd}", first.SANPHAM.NgayPhatHanh)" />
+                    <p style="color:red;"><strong>@ViewData["loingayph"]</strong></p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Nội dung ngắn:</label>
+                <div class="controls">
+                    <textarea class="ck" name="ndngan" id="ndngan" cols="150" rows="20" placeholder="Nhập nội dung ngắn">@first.SANPHAM.NoiDungNgan</textarea>
+                    <p style="color:red;"><strong>@ViewData["loindngan"]</strong></p>
+                    <script>CKEDITOR.replace("ndngan")</script>
+                </div>
+            </div>
+            
+
+            foreach (var item in Model)
+            {
+                i++;
+                idname = "anh" + i.ToString();
+                <div class="control-group">
+                    <label class="control-label">Ảnh @i.ToString():</label>
+                    <div class="controls">
+                        <img src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" height="160" width="160" />
+                        <input type="file" accept=".png, .jpg, .jpeg" name=@idname />
+                        <p style="color:red;"><strong>@ViewData["loianh" + i.ToString()]</strong></p>
+                    </div>
+                </div>
+            }
+
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-large btn-success" type="submit" value="Cập nhật" />
+                </div>
+            </div>
+        }
+
+    </div>
+    <a href="@Url.Action("trangQLSP", "AdminQLSP")" class="btn btn-large"><i class="icon-arrow-left"></i> Quay về trang quản lý sản phẩm </a>
+</div>

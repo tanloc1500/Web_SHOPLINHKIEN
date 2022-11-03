@@ -1,0 +1,48 @@
+﻿@model Web_SHOPLINHKIEN.Models.HANGSANXUAT
+
+@{
+    ViewBag.Title = "trangQLHangSX_themmoi";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin </a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangQLHangSX", "Admin")">Quản lý hãng sản xuất </a> <span class="divider">/</span></li>
+        <li class="active">Thêm mới hãng sản xuất</li>
+    </ul>
+    <table class="table table-bordered">
+        <tr><th>THÊM MỚI HÃNG SẢN XUẤT</th></tr>
+        <tr>
+            <td>
+                @using (Html.BeginForm("trangQLHangSX_themmoi", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <p style="color:darkred"><sup style="color:darkred">*</sup> Bắt buộc</p>
+                    <div class="control-group">
+                        <label class="control-label">Mã hãng sản xuất<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input type="text" id="ma" name="ma" maxlength="5" placeholder="Nhập mã hãng sản xuất" value="@ViewData["ma"]">
+                            <p><strong style="color:darkred;">@ViewData["loima"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Tên hãng sản xuất<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input type="text" id="ten" name="ten" maxlength="50" placeholder="Nhập tên hãng sản xuất" value="@ViewData["tenloaisp"]">
+                            <p><strong style="color:darkred;">@ViewData["loiten"]</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">THÊM MỚI</button>
+                        </div>
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+    <a href="@Url.Action("trangQLHangSX", "Admin")" class="btn btn-large"><i class="icon-arrow-left"></i> Quay về trang quản lý hãng sản xuất </a>
+</div>

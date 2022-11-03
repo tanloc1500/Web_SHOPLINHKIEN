@@ -1,0 +1,58 @@
+﻿@using Web_SHOPLINHKIEN.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<Web_SHOPLINHKIEN.Models.joinTable_SANPHAM>
+
+@{
+    ViewBag.Title = "trangQLSP";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin </a> <span class="divider">/</span></li>
+        <li class="active">Quản lý sản phẩm</li>
+    </ul>
+    <h3>DANH SÁCH SẢN PHẨM</h3>
+    <a href="@Url.Action("trangQLSP_themmoi", "AdminQLSP")" class="btn btn-large"> Thêm mới</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ảnh sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td><img width="60" src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="" /></td>
+                    <td>
+                        @item.SANPHAM.TenSP
+                    </td>
+                    <td>
+                       @item.SANPHAM.SoLuong
+                    </td>
+                    <td>@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</td>
+                    <td>
+                        <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLSP_sua", "AdminQLSP", new { id = item.SANPHAM.MaSP.Trim() })'">Sửa</button>
+                        <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLSP_xem", "AdminQLSP", new { id = item.SANPHAM.MaSP.Trim() })'">Xem</button>
+                        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLSP_xoa", "AdminQLSP", new { id = item.SANPHAM.MaSP.Trim() })'">
+                            <i style="color:white;" class="icon-remove icon-white"></i>
+                        </button>
+                    </td>
+                </tr>
+
+            }
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("trangQLSP", "AdminQLSP", new { page = page }))
+    </div>
+</div>
+

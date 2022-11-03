@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.LOAISANPHAM>
+@foreach (var item in Model)
+{
+    if (item.MaLoaiSP.Trim() == ViewBag.loaiSP)
+    {
+        <option selected value="@item.MaLoaiSP.Trim()">@item.TenLoaiSP</option>
+    }
+    else
+    {
+        <option value="@item.MaLoaiSP.Trim()">@item.TenLoaiSP</option>
+    }
+}

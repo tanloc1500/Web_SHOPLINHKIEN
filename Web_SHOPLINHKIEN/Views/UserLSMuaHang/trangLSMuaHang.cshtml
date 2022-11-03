@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_KHG_DONHG>
+
+@{
+    ViewBag.Title = "trangLSMuaHang";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+}
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ </a> <span class="divider">/</span></li>
+        <li class="active">Lịch sử mua hàng</li>
+    </ul>
+    <h3>Danh sách đơn hàng</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Ngày đặt hàng</th>
+                <th>Ngày giao hàng</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                
+            <tr>
+                <td>@item.DONHANG.MaDH.Trim()</td>
+                <td>
+                    @String.Format("{0: dd/MM/yyyy}", item.DONHANG.NgayDatHang)
+                </td>
+                <td>@String.Format("{0: dd/MM/yyyy}", item.DONHANG.NgayGiaoHang)</td>
+                <td>@item.TRANGTHAIDONHANG.TenTrangThai</td>
+                <td>
+
+                    <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangLSMuaHang_xemchitiet", "UserLSMuaHang", new { id = item.DONHANG.MaDH.Trim() })'">Xem</button>
+                    @if (item.TRANGTHAIDONHANG.MaTrangThai != "DGH")
+                    {
+                        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangLSMuaHang_xoa", "UserLSMuaHang", new { id = item.DONHANG.MaDH.Trim() })'">
+                            <i style="color:white;" class="icon-remove icon-white"></i>
+                        </button>
+                    }
+
+                </td>
+            </tr>
+            }
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</div>

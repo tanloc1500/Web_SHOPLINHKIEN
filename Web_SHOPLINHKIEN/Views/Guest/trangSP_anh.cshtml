@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.ANHSANPHAM>
+
+<div id="gallery" class="span3">
+    <a href="~/ANHSANPHAM/@Url.Content(Model.First().FileAnh)">
+        <img src="~/ANHSANPHAM/@Url.Content(Model.First().FileAnh)" style="width:100%" alt="" />
+    </a>
+        <div id="differentview" class="moreOptopm carousel slide">
+            <div class="carousel-inner">
+                <div class="item active">
+    
+                    @foreach (var item in Model.Skip(1).Take(3))
+                    {
+                        <a href="~/ANHSANPHAM/@Url.Content(item.FileAnh)"> <img style="width:29%" src="~/ANHSANPHAM/@Url.Content(item.FileAnh)" alt="" /></a>
+                    }
+                    
+                </div>
+            </div>
+
+        </div>
+
+</div>

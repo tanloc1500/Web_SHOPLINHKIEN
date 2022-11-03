@@ -1,0 +1,51 @@
+﻿@using Web_SHOPLINHKIEN.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<Web_SHOPLINHKIEN.Models.joinTable_SANPHAM>
+
+@{
+    ViewBag.Title = "trangTimKiem";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+    
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ</a> <span class="divider">/</span></li>
+        <li class="active">Danh sách sản phẩm</li>
+    </ul>
+    <h3>Danh sách sản phẩm<small class="pull-right"></small></h3>
+    <hr class="soft" />
+    <br class="clr" />
+    @if (Model.Count() == 0)
+    {
+        <h4>Không tìm thấy sản phẩm nào!</h4>
+    }
+    <div class="tab-content">
+
+        <div class="tab-pane  active" id="blockView">
+            <ul class="thumbnails">
+                @foreach (var item in Model)
+                {
+                    <li class="span3">
+                        <div class="thumbnail">
+                            <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                                <img height="160" width="160" src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="" />
+                                <div class="caption">
+                                    <h5 style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;">@item.SANPHAM.TenSP</h5>
+                                    <h4 style="color:darkred; text-align:center">@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</h4>
+
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <hr class="soft" />
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("trangTimKiem", "Guest", new 
+           { page = page, idLoaiSP = ViewBag.idLoaiSP, idHangSX = ViewBag.idHangSX, ten = ViewBag.ten }))
+            </div>
+        </div>
+    </div>
+    <br class="clr" />
+</div>

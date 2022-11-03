@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "trangDangKy";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ</a> <span class="divider">/</span></li>
+        <li class="active">Đăng ký tài khoản</li>
+    </ul>
+    <h3>Đăng ký tài khoản</h3>
+    <div class="well">
+        <!--
+        <div class="alert alert-info fade in">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+         </div>
+        <div class="alert fade in">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+         </div>
+         <div class="alert alert-block alert-error fade in">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Lorem Ipsum is simply</strong> dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+         </div> -->
+
+            @using (Html.BeginForm("trangDangKy", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+            <h4>Đăng ký tài khoản</h4>
+            <p style="color:darkred"><sup style="color:darkred">*</sup> Bắt buộc</p>
+            <div class="control-group">
+                <label class="control-label">Họ và tên<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="text" id="tenKH" name="tenKH" value="@ViewData["tenKH"]" placeholder="Nhập họ và tên">
+                    <p style="color:red;"><strong>@ViewData["loitenKH"]</strong></p>
+                </div>
+            </div><div class="control-group">
+                <label class="control-label">Giới tính<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <select class="span1" name="gioitinh">
+                        <option value="">Chọn giới tính</option>
+                        @if (ViewData["gioitinh"] == null)
+                        {
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                        }
+                        else if (ViewData["gioitinh"].ToString() == "0")
+                        {
+                        <option selected value="0">Nam</option>
+                        <option value="1">Nữ</option>
+                        }
+                        else if (ViewData["gioitinh"].ToString() == "1")
+                        {
+                        <option value="0">Nam</option>
+                        <option selected value="1">Nữ</option>
+                        }
+                        else
+                        {
+                        <option value="0">Nam</option>
+                        <option value="1">Nữ</option>
+                        }
+
+                    </select>
+                    <p style="color:red;"><strong>@ViewData["loigioitinh"]</strong></p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Email <sup style="color:darkred">*</sup></label>
+                <div class="controls">
+                    <input type="email" id="email" name="email" value="@ViewData["email"]" placeholder="Nhập email">
+                    <p style="color:red"><strong>@ViewData["loiemail"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Số điện thoại<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" id="sdt" name="sdt" value="@ViewData["sdt"]" placeholder="Nhập số điện thoại">
+                    <p style="color:red;"><strong>@ViewData["loisdt"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Tên tài khoản<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" value="@ViewData["username"]" placeholder="Nhập tên tài khoản">
+                    <p style="color:red;"><strong>@ViewData["loiusername"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Mật khẩu<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="password" id="pass" name="pass" placeholder="Nhập mật khẩu">
+                    <p style="color:red;"><strong>@ViewData["loipass"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Nhập lại mật khẩu<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="password" id="repass" name="repass" placeholder="Nhập lại mật khẩu">
+                    <p style="color:red;"><strong>@ViewData["loirepass"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Ngày sinh<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <input type="date" id="ngaysinh" name="ngaysinh" value="@ViewData["ngaysinh"]" placeholder="Nhập ngày sinh" />
+                    <p style="color:red;"><strong>@ViewData["loingaysinh"]</strong></p>
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label">Địa chỉ<sup style="color:darkred">*</sup>:</label>
+                <div class="controls">
+                    <textarea name="diachi" id="diachi" cols="26" rows="3" placeholder="Nhập địa chỉ">@ViewData["diachi"]</textarea>
+                    <p style="color:red;"><strong>@ViewData["loidiachi"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-large btn-success" type="submit" value="Đăng ký" />
+                </div>
+            </div>
+            }
+        
+    </div>
+
+</div>

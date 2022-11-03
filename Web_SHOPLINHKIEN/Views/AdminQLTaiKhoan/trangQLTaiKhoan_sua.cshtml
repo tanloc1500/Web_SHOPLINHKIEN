@@ -1,0 +1,97 @@
+﻿@model Web_SHOPLINHKIEN.Models.joinTable_KHG_TAIKHOAN
+
+@{
+    ViewBag.Title = "trangQLTaiKhoan_sua";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")">Quản lý tài khoản </a> <span class="divider">/</span></li>
+        <li class="active">Chỉnh sửa thông tin tài khoản</li>
+    </ul>
+    <h3>Chỉnh sửa thông tin tài khoản</h3>
+    <div class="well">
+        @using (Html.BeginForm("trangQLTaiKhoan_sua", "AdminQLTaiKhoan", FormMethod.Post, new { @class = "form-horizontal", id = Model.KHACHHANG.MaTK.Trim() }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <h4>Chỉnh sửa thông tin tài khoản</h4>
+            <div class="control-group">
+                <label class="control-label">Họ và tên:</label>
+                <div class="controls">
+                    <input type="text" id="tenKH" name="tenKH" value="@Model.KHACHHANG.HoTen" placeholder="Nhập họ và tên">
+                    <p style="color:red;"><strong>@ViewData["loitenKH"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Giới tính:</label>
+                <div class="controls">
+                    <select class="span1" name="gioitinh">
+                        @if (!Model.KHACHHANG.GioiTinh)
+                        {
+                            <option selected value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                        }
+                        else
+                        {
+                            <option value="0">Nam</option>
+                            <option selected value="1">Nữ</option>
+                        }
+                    </select>
+                    <p style="color:red;"><strong>@ViewData["loigioitinh"]</strong></p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Email </label>
+                <div class="controls">
+                    <input type="email" id="email" name="email" value="@Model.KHACHHANG.Email" placeholder="Nhập email">
+                    <p style="color:red"><strong>@ViewData["loiemail"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Số điện thoại:</label>
+                <div class="controls">
+                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" id="sdt" name="sdt" value="@Model.KHACHHANG.SDT" placeholder="Nhập số điện thoại">
+                    <p style="color:red;"><strong>@ViewData["loisdt"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Tên tài khoản:</label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" value="@Model.TAIKHOAN.ID.Trim()" placeholder="Nhập tên tài khoản">
+                    <p style="color:red;"><strong>@ViewData["loiusername"]</strong></p>
+                    <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_suaMatKhau", "AdminQLTaiKhoan", new { id = Model.TAIKHOAN.MaTK.Trim() })'">
+                        Đổi mật khẩu
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Ngày sinh:</label>
+                <div class="controls">
+                    <input type="date" id="ngaysinh" name="ngaysinh" value="@String.Format("{0:yyyy-MM-dd}", Model.KHACHHANG.NgaySinh)" placeholder="Nhập ngày sinh" />
+                    <p style="color:red;"><strong>@ViewData["loingaysinh"]</strong></p>
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label">Địa chỉ:</label>
+                <div class="controls">
+                    <textarea name="diachi" id="diachi" cols="26" rows="3" placeholder="Nhập địa chỉ">@Model.KHACHHANG.DiaChi</textarea>
+                    <p style="color:red;"><strong>@ViewData["loidiachi"]</strong></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-large btn-success" type="submit" value="Cập nhật" />
+                </div>
+            </div>
+        }
+
+    </div>
+    <a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")" class="btn btn-large"><i class="icon-arrow-left"></i> Quay về trang quản lý tài khoản </a>
+</div>

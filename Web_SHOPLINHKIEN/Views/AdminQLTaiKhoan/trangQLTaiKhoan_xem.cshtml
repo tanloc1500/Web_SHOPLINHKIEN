@@ -1,0 +1,79 @@
+﻿@model Web_SHOPLINHKIEN.Models.joinTable_KHG_TAIKHOAN
+
+@{
+    ViewBag.Title = "trangQLTaiKhoan_xem";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")">Quản lý tài khoản</a> <span class="divider">/</span></li>
+        <li class="active">Thông tin chi tiết khách hàng @Model.KHACHHANG.MaKH</li>
+    </ul>
+    <h3>Thông tin tài khoản</h3>
+    <div class="well">
+        <form class="form-horizontal">
+            <h4>Thông tin khách hàng</h4>
+            <div class="control-group">
+                <label class="control-label">Họ và tên:</label>
+                <div class="controls">
+                    <input type="text" value="@Model.KHACHHANG.HoTen" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Giới tính:</label>
+                @{
+                    string gt;
+                    if (Model.KHACHHANG.GioiTinh == false)
+                    {
+                        gt = "Nam";
+                    }
+                    else
+                    {
+                        gt = "Nữ";
+                    }
+                }
+                <div class="controls">
+                    <input type="text" value="@gt" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Email:</label>
+                <div class="controls">
+                    <input type="text" value="@Model.KHACHHANG.Email" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Số điện thoại:</label>
+                <div class="controls">
+                    <input type="text" value="@Model.KHACHHANG.SDT" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Ngày sinh:</label>
+                <div class="controls">
+                    <input type="text" value="@String.Format("{0:dd-MM-yyyy}", Model.KHACHHANG.NgaySinh)" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Tên tài khoản:</label>
+                <div class="controls">
+                    <input type="text" value="@Model.TAIKHOAN.ID.Trim()" readonly />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Địa chỉ:</label>
+                <div class="controls">
+                    <textarea readonly cols="26" rows="3">@Model.KHACHHANG.DiaChi</textarea>
+                </div>
+            </div>
+        </form>
+        <a href="@Url.Action("trangQLTaiKhoan_sua", "AdminQLTaiKhoan", new { id=Model.TAIKHOAN.MaTK.Trim() })" class="btn">Chỉnh sửa tài khoản </a>
+        <a href="@Url.Action("trangQLTaiKhoan_suaMatKhau", "AdminQLTaiKhoan", new { id=Model.TAIKHOAN.MaTK.Trim() })" class="btn"> Đổi mật khẩu </a>
+        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_xoa", "AdminQLTaiKhoan", new { id = Model.TAIKHOAN.MaTK.Trim() })'">
+            <i><i style="color:white;" class="icon-remove icon-white"></i>Xóa tài khoản</i>
+        </button>
+    </div>
+    <a href="@Url.Action("trangAdminQLTaiKhoan", "AdminQLTaiKhoan")" class="btn btn-large"><i class="icon-arrow-left"></i> Quay về trang quản lý tài khoản </a>
+</div>

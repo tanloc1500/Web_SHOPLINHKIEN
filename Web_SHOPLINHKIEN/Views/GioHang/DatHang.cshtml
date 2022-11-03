@@ -1,0 +1,121 @@
+﻿@using Web_SHOPLINHKIEN.Models;
+@model IEnumerable<Web_SHOPLINHKIEN.Models.GioHang>
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("GioHang", "GioHang")">Giỏ hàng</a> <span class="divider">/</span></li>
+        <li class="active">Đặt hàng</li>
+    </ul>
+    <h3>THÔNG TIN CÁC SẢN PHẨM TRONG ĐƠN HÀNG</h3>
+    <hr class="soft" />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ảnh sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("trangSP", "Guest", new { id = item.sMaSP.Trim() })">
+                            <img width="60" src="~/ANHSANPHAM/@Url.Content(item.sAnhSP)" alt="" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("trangSP", "Guest", new { id = item.sMaSP.Trim() })">
+                            @item.sTenSP
+                        </a>
+                    </td>
+                    <td>
+                        <div class="input-append">
+                            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { sMaSP = item.sMaSP.Trim() }))
+                            {
+                                <input class="span1" style="max-width:34px" size="16" type="number" min="1" max="@item.iSLMax" value="@item.iSoLuong" name="soluong">
+                                <button class="btn" type="submit">CẬP NHẬT</button>
+                                
+                            }
+
+                        </div>
+                    </td>
+                    <td>@String.Format("{0:0,0}", item.dDonGia)</td>
+                    <td>@String.Format("{0:0,0}", item.dThanhTien)</td>
+                    <td>
+                        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("XoaGioHang", "GioHang", new { sMaSP = item.sMaSP.Trim() })'">
+
+                            <i style="color:white;" class="icon-remove icon-white"></i>
+
+                        </button>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="6" style="text-align:right">TỔNG CỘNG: &nbsp;&nbsp;<strong style="color:darkred">@String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</strong> </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p>Số lượng sản phẩm: @ViewBag.TongSoLuong <a href="@Url.Action("XoaTatCaGioHang", "GioHang")" class="btn btn-danger"><strong style="color:white;">Xóa giỏ hàng</strong></a></p>
+    <table class="table table-bordered">
+        <tr><th>THÔNG TIN ĐƠN HÀNG </th></tr>
+        @{ 
+            KHACHHANG kh = (KHACHHANG)Session["khachhang"];
+        }
+        <tr>
+            <td>
+                @using (Html.BeginForm("DatHang", "GioHang", FormMethod.Post, new { @class = "form-horizontal", MaKH = kh.MaKH.Trim() }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <p style="color:darkred"><sup style="color:darkred">*</sup> Bắt buộc</p>
+                    <div class="control-group">
+                        <label class="control-label">Họ và tên khách hàng<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input type="text" id="TenKH" name="TenKH" readonly value="@kh.HoTen">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số điện thoại<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input type="text" id="sdt" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                   name="sdt" value="@kh.SDT" placeholder="Nhập số điện thoại">
+                            <p style="color:darkred"><strong>@ViewData["loisdt"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPost">Địa chỉ<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <textarea name="diachi" id="diachi" cols="26" rows="3" placeholder="Nhập địa chỉ">@kh.DiaChi</textarea>
+                            <p style="color:darkred"><strong>@ViewData["loidiachi"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPost">Ghi chú: </label>
+                        <div class="controls">
+                            <textarea name="ghichu" id="ghichu" cols="26" rows="3" placeholder="Nhập ghi chú"></textarea>
+                            <p style="color:darkred"><strong>@ViewData["loighichu"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">XÁC NHẬN ĐẶT HÀNG</button>
+                        </div>
+                    </div>
+                    <p><strong>Lưu ý: </strong>Thời gian giao hàng có thể từ 3 đến 7 ngày tùy khu vực giao hàng.</p>
+                }
+            </td>
+        </tr>
+    </table>
+    <a href="@Url.Action("GioHang", "GioHang")" class="btn btn-large"><strong><i class="icon-arrow-left"></i> Quay về giỏ hàng </strong></a>
+</div>

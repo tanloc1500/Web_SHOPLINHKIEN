@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_KHG_DONHG>
+
+@{
+    ViewBag.Title = "trangQLDonHang";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin </a> <span class="divider">/</span></li>
+        <li class="active">Quản lý đơn hàng</li>
+    </ul>
+    <h3>DANH SÁCH ĐƠN HÀNG</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Ngày đặt hàng</th>
+                <th>Ngày giao hàng</th>
+                <th>Trạng thái</th>
+                <th>Tên tài khoản</th>
+                <th>Ghi chú</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>@item.DONHANG.MaDH.Trim()</td>
+                    <td>
+                        @String.Format("{0: dd/MM/yyyy}", item.DONHANG.NgayDatHang)
+                    </td>
+                    <td>@String.Format("{0: dd/MM/yyyy}", item.DONHANG.NgayGiaoHang)</td>
+                    <td>
+                        @item.TRANGTHAIDONHANG.TenTrangThai
+                        @if (item.TRANGTHAIDONHANG.MaTrangThai != "DGH")
+                        {
+                            <button class="btn" type="button" onclick="window.location.href='@Url.Action("DaGiaoHang", "AdminQLDonHang", new { id = item.DONHANG.MaDH.Trim() })'">Giao hàng</button>
+                        }
+                        </td>
+                    <td>@Html.Action("UserName", "AdminQLDonHang", new { id = item.KHACHHANG.MaTK.Trim() })</td>
+                    <td>@item.DONHANG.GhiChu</td>
+                    <td>
+                        <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLDonHang_xem", "AdminQLDonHang", new { id = item.DONHANG.MaDH.Trim() })'">Xem</button>
+                        @if (item.TRANGTHAIDONHANG.MaTrangThai != "DGH")
+                        {
+                            <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLDonHang_sua", "AdminQLDonHang", new { id = item.DONHANG.MaDH.Trim() })'">Sửa</button>
+                            <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLDonHang_xoa", "AdminQLDonHang", new { id = item.DONHANG.MaDH.Trim() })'">
+                                <i style="color:white;" class="icon-remove icon-white"></i>
+                            </button>
+                        }
+
+                    </td>
+                </tr>
+            }
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

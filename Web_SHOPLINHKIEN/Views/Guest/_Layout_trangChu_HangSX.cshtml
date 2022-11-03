@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.HANGSANXUAT>
+
+@foreach (var item in Model)
+{
+    <li>
+        <a href="@Url.Action("trangTimKiem", "Guest", new { idHangSX = item.MaHangSX.Trim() })">
+        @item.TenHangSX [@Html.Action("_Layout_trangChu_HangSX_soluong", "Guest", new { id = item.MaHangSX.Trim() })]
+        </a>
+    </li>
+}

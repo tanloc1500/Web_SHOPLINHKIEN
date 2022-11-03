@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_KHG_TAIKHOAN>
+
+@{
+    ViewBag.Title = "trangAdminQLTaiKhoan";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin </a> <span class="divider">/</span></li>
+        <li class="active">Quản lý tài khoản khách hàng</li>
+    </ul>
+    <h3>DANH SÁCH TÀI KHOẢN KHÁCH HÀNG</h3>
+    <a href="@Url.Action("trangQLTaiKhoan_themmoi", "AdminQLTaiKhoan")" class="btn btn-large"> Thêm mới</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên tài khoản</th>
+                <th>Tên khách hàng</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                
+            <tr>
+                <td>@item.TAIKHOAN.ID.Trim()</td>
+                <td>
+                    @item.KHACHHANG.HoTen
+                </td>
+                @{ 
+                    string gt;
+                    if (item.KHACHHANG.GioiTinh)
+                    {
+                        gt = "Nữ";
+                    }
+
+                    else
+                    {
+                        gt = "Nam";
+                    }
+
+                }
+                <td>@gt</td>
+                <td>@item.KHACHHANG.SDT</td>
+                <td>@item.KHACHHANG.Email</td>
+                <td>
+                    <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_sua", "AdminQLTaiKhoan", new { id = item.TAIKHOAN.MaTK.Trim() })'">Sửa</button>
+                    <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_xem", "AdminQLTaiKhoan", new { id = item.TAIKHOAN.MaTK.Trim() })'">Xem</button>
+                        <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLTaiKhoan_xoa", "AdminQLTaiKhoan", new { id = item.TAIKHOAN.MaTK.Trim() })'">
+                            <i style="color:white;" class="icon-remove icon-white"></i>
+                        </button>
+                </td>
+            </tr>
+                
+            }
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</div>

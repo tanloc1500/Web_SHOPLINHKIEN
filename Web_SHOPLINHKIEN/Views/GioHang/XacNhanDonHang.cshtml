@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_KHG_DONHG_CHITIET>
+
+@{
+    ViewBag.Title = "XacNhanDonHang";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+    var first = Model.First();
+    decimal tongtien = 0;
+    int tongsl = 0;
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ</a> <span class="divider">/</span></li>
+        <li class="active">Xác nhận đặt hàng đơn hàng @first.DONHANG.MaDH</li>
+    </ul>
+    <h3>ĐẶT HÀNG THÀNH CÔNG!</h3>
+    <p> Đơn hàng của bạn đã được đặt hàng thành công!</p>
+    <p> Chúng tôi sẽ sớm liên hệ và giao hàng theo đúng ngày bạn yêu cầu.</p>
+    <h3>THÔNG TIN CHI TIẾT ĐƠN HÀNG</h3>
+
+    <div class="control-group">
+        <label class="control-label">Mã đơn hàng: </label>
+        <div class="controls">
+            <strong>@first.DONHANG.MaDH</strong>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Tên khách hàng: </label>
+        <div class="controls">
+            <strong>@first.KHACHHANG.HoTen</strong>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Số điện thoại: </label>
+        <div class="controls">
+            <strong>@first.DONHANG.SDT</strong>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Địa chỉ giao hàng: </label>
+        <div class="controls">
+            <strong>@first.DONHANG.DiaChi</strong>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Ngày đặt hàng: </label>
+        <div class="controls">
+            <strong>@String.Format("{0:dd/MM/yyyy}", first.DONHANG.NgayDatHang)</strong>
+        </div>
+        <p><strong>Lưu ý: </strong>Thời gian giao hàng có thể từ 3 đến 7 ngày tùy khu vực giao hàng.</p>
+    </div>
+    <h3>Các sản phẩm đã đặt trong đơn hàng</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ảnh sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                            <img width="60" src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                            @item.SANPHAM.TenSP
+                        </a>
+                    </td>
+                    <td>
+                        @item.DONHANGCHITIET.SoLuong
+                    </td>
+                    <td>@String.Format("{0:0,0}", item.DONHANGCHITIET.DonGia)</td>
+                    <td>@String.Format("{0:0,0}", item.DONHANGCHITIET.DonGia * item.DONHANGCHITIET.SoLuong)</td>
+                    @{
+                        tongtien += (decimal)item.DONHANGCHITIET.DonGia * (decimal)item.DONHANGCHITIET.SoLuong;
+                        tongsl += (int)item.DONHANGCHITIET.SoLuong;
+                    }
+                </tr>
+            }
+            <tr>
+                <td colspan="6" style="text-align:right">TỔNG CỘNG: &nbsp;&nbsp;<strong style="color:darkred">@String.Format("{0:0,0}", tongtien) VNĐ</strong> </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p>Số lượng sản phẩm: <strong>@tongsl</strong></p>
+</div>

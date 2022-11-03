@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_SANPHAM>
+@{ 
+    var nhom1 = Model.Take(4);
+    var nhom2 = Model.Skip(4).Take(4);
+    var nhom3 = Model.Skip(8).Take(4);
+}
+ 
+   <div class="item active">
+       <ul class="thumbnails">
+           @foreach (var item in nhom1)
+           {
+               <li class="span3">
+                   <div class="thumbnail">
+                       <i class="tag"></i>
+                       <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                           <img src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="">
+                           <div class="caption">
+                               <h5 style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;">@item.SANPHAM.TenSP</h5>
+                               <h4 style="color:darkred; text-align:center">@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</h4>
+                           </div>
+                       </a>
+                   </div>
+               </li>
+           }
+       </ul>
+    </div>
+   <div class="item">
+       <ul class="thumbnails">
+           @foreach (var item in nhom2)
+           {
+               <li class="span3">
+                   <div class="thumbnail">
+                       <i class="tag"></i>
+                       <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                           <img src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="">
+                           <div class="caption">
+                               <h5 style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;">@item.SANPHAM.TenSP</h5>
+                               <h4 style="color:darkred; text-align:center">@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</h4>
+                           </div>
+                       </a>
+                   </div>
+               </li>
+           }
+           </ul>
+   </div>
+    <div class="item">
+        <ul class="thumbnails">
+            @foreach (var item in nhom3)
+            {
+                <li class="span3">
+                    <div class="thumbnail">
+                        <i class="tag"></i>
+                        <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                            <img src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="">
+                            <div class="caption">
+                                <h5 style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;">@item.SANPHAM.TenSP</h5>
+                                <h4 style="color:darkred; text-align:center">@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</h4>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>

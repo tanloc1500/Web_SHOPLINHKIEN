@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "trangDangNhap";
+    Layout = "~/Views/Shared/_Layout_trangChu.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChu", "Guest")">Trang chủ</a> <span class="divider">/</span></li>
+        <li class="active">Đăng nhập</li>
+    </ul>
+    <h3>Đăng nhập</h3>
+    <hr class="soft" />
+
+    <div class="row">
+
+        <div class="span4">
+            <div class="well">
+                <h5>ĐĂNG NHẬP TÀI KHOẢN</h5>
+                @using (Html.BeginForm("trangDangNhap", "User", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <p style="color:darkred"><sup style="color:darkred">*</sup> Bắt buộc</p>
+                    <p style="color:red;"><strong>@ViewData["loi"]</strong></p>
+                    <div class="control-group">
+                        <label class="control-label">Tên tài khoản<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input class="span3" type="text" id="username" name="username" placeholder="Nhập tên tài khoản">
+                            <p style="color:red;"><strong>@ViewData["loiusername"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Mật khẩu<sup style="color:darkred">*</sup>: </label>
+                        <div class="controls">
+                            <input type="password" class="span3" id="pass" name="pass" placeholder="Nhập mật khẩu">
+                            <p style="color:red;"><strong>@ViewData["loipass"]</strong></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">Đăng nhập</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="span1"> &nbsp;</div>
+
+        <div class="span4">
+            <div class="well">
+                <h5>BẠN CHƯA CÓ TÀI KHOẢN?</h5><br />
+                Đăng kí ngay<br /><br /><br />
+                
+                    <div class="controls">
+                            <button type="button" onclick="window.location.href='@Url.Action("trangDangKy", "User")'" class="btn block">
+                                
+                                    Tạo tài khoản
+                                
+                            </button>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

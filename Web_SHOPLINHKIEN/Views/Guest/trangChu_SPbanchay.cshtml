@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.joinTable_SANPHAM>
+
+<ul class="thumbnails">
+    @foreach (var item in Model)
+    {
+        <li class="span3">
+            <div class="thumbnail">
+                <a href="@Url.Action("trangSP", "Guest", new { id = item.SANPHAM.MaSP.Trim() })">
+                    <img src="~/ANHSANPHAM/@Url.Content(item.ANHSANPHAM.FileAnh)" alt="" />
+                    <div class="caption">
+                        <h5 style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;">@item.SANPHAM.TenSP</h5>
+                        <h4 style="color:darkred; text-align:center">@String.Format("{0:0,0}", item.SANPHAM.GiaTien) VNĐ</h4>
+                    </div>
+                </a>
+            </div>
+        </li>
+    }
+
+</ul>

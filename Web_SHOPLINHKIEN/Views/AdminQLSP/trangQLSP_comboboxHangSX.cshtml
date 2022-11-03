@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Web_SHOPLINHKIEN.Models.HANGSANXUAT>
+@foreach (var item in Model)
+{
+    if (item.MaHangSX.Trim() == ViewBag.hangSX)
+    {
+        <option selected value="@item.MaHangSX.Trim()">@item.TenHangSX</option>
+    }
+    else
+    {
+        <option value="@item.MaHangSX.Trim()">@item.TenHangSX</option>
+    }
+}

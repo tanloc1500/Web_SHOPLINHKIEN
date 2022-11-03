@@ -1,0 +1,106 @@
+﻿@model Web_SHOPLINHKIEN.Models.joinTable_SANPHAM
+
+@{
+    ViewBag.Title = "trangQLSP_xem";
+    Layout = "~/Views/Shared/_Layout_trangAdmin.cshtml";
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("trangChuAdmin", "Admin")">Trang chủ Admin</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("trangQLSP", "AdminQLSP")">Quản lý sản phẩm</a> <span class="divider">/</span></li>
+        <li class="actiemive">@Model.SANPHAM.TenSP</li>
+    </ul>
+    <div class="row">
+        @Html.Action("trangSP_anh", "Guest", new { id = Model.SANPHAM.MaSP.Trim() })
+        <div class="span6">
+            <h3>@Model.SANPHAM.TenSP</h3>
+            <hr class="soft" />
+            <div class="control-group">
+                <label class="control-label"><span><strong style="color:darkred; font-size:large">@String.Format("{0:0,0}", Model.SANPHAM.GiaTien) VNĐ</strong></span></label>
+                <div class="controls">
+
+                    <button class="btn" type="button" onclick="window.location.href='@Url.Action("trangQLSP_sua", "AdminQLSP", new { id = Model.SANPHAM.MaSP.Trim() })'">Sửa</button>
+                    <button class="btn btn-danger" type="button" onclick="window.location.href='@Url.Action("trangQLSP_xoa", "AdminQLSP", new { id = Model.SANPHAM.MaSP.Trim() })'">
+                        <i><i style="color:white;" class="icon-remove icon-white"></i> Xóa sản phẩm</i>
+                    </button>
+                </div>
+            </div>
+
+
+            <hr class="soft" />
+            <h4>Sản phẩm này còn @Model.SANPHAM.SoLuong cái</h4>
+            <hr class="soft clr" />
+            <p>
+                @Html.Raw(Model.SANPHAM.NoiDungNgan)
+            </p>
+            <a class="btn btn-small pull-right" href="#detail">Chi tiết</a>
+            <br class="clr" />
+            <a href="#" name="detail"></a>
+            <hr class="soft" />
+        </div>
+
+        <div class="span9">
+            <ul id="productDetail" class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">Chi tiết sản phẩm</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+                    <h4>Thông tin sản phẩm</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="techSpecRow"><th colspan="2">Chi tiết sản phẩm</th></tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Tên sản phẩm:</td>
+                                <td class="techSpecTD2">
+                                    @Model.SANPHAM.TenSP
+                                </td>
+                            </tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Mã SKU:</td>
+                                <td class="techSpecTD2">
+                                    @Model.SANPHAM.MaSKU
+                                </td>
+                            </tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Hãng sản xuất:</td>
+                                <td class="techSpecTD2">
+                                    
+                                        @Model.HANGSANXUAT.TenHangSX
+                                   
+                                </td>
+                            </tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Loại sản phẩm:</td>
+                                <td class="techSpecTD2">
+                                    
+                                        @Model.LOAISANPHAM.TenLoaiSP
+                                    
+                                </td>
+                            </tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Ngày phát hành:</td>
+                                <td class="techSpecTD2">
+                                    @Model.SANPHAM.NgayPhatHanh.Value.ToString("dd-MM-yyyy")
+                                </td>
+                            </tr>
+                            <tr class="techSpecRow">
+                                <td class="techSpecTD1">Số lượng đã bán:</td>
+                                <td class="techSpecTD2">
+                                    @Model.SANPHAM.SoLuongDaBan cái
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5>Chức năng:</h5>
+                    <p>
+                        @Html.Raw(Model.SANPHAM.NoiDungNgan)
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
